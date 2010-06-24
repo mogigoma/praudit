@@ -35,7 +35,8 @@
 .Nd "print the contents of audit trail files"
 .Sh SYNOPSIS
 .Nm
-.Op Fl lpx
+.Op Fl lp
+.Op Fl b | x
 .Op Fl r | s
 .Op Fl d Ar del
 .Op Ar
@@ -51,6 +52,11 @@ by default.
 .Pp
 The options are as follows:
 .Bl -tag -width indent
+.It Fl b
+Print audit records in the binary output format.
+The input must be in XML format.
+This option is exclusive from
+.Fl x .
 .It Fl d Ar del
 Specifies the delimiter.
 The default delimiter is the comma.
@@ -79,6 +85,8 @@ This option is exclusive from
 .Fl r .
 .It Fl x
 Print audit records in the XML output format.
+This option is exclusive from
+.Fl b .
 .El
 .Pp
 If the raw or short forms are not specified, the default is to print the tokens

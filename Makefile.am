@@ -9,6 +9,6 @@ INCLUDES = -I$(top_builddir) -I$(top_srcdir) -I$(top_srcdir)/sys
 endif
 
 sbin_PROGRAMS = praudit
-praudit_SOURCES = praudit.c
+praudit_SOURCES = praudit.c tokenify_binary.c tokenify_text.c
 praudit_LDADD = $(top_builddir)/libbsm/libbsm.la
 man1_MANS = praudit.1

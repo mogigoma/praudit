@@ -185,7 +185,7 @@ top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 @USE_NATIVE_INCLUDES_FALSE@INCLUDES = -I$(top_builddir) -I$(top_srcdir) -I$(top_srcdir)/sys
 @USE_NATIVE_INCLUDES_TRUE@INCLUDES = -I$(top_builddir) -I$(top_srcdir)
-praudit_SOURCES = praudit.c
+praudit_SOURCES = praudit.c tokenify_binary.c tokenify_text.c
 praudit_LDADD = $(top_builddir)/libbsm/libbsm.la
 man1_MANS = praudit.1
 all: all-am
