@@ -189,7 +189,7 @@ el_arbitrary(const char *el, const char **attr, const char *body)
 
 	/* Parse body. */
 	body_p = body;
-	for (i = 0; i < count * size; i++) {
+	for (i = 0; i < count * size; i += size) {
 		if (body_p == NULL || *body_p == '\0')
 			break;
 
