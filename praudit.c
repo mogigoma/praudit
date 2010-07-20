@@ -125,7 +125,7 @@ main(int argc, char **argv)
 	/* For each of the files passed as arguments dump the contents. */
 	if (optind == argc) {
 		print_tokens(stdin);
-		return (1);
+		return (0);
 	}
 	for (i = optind; i < argc; i++) {
 		fp = fopen(argv[i], "r");
@@ -138,5 +138,5 @@ main(int argc, char **argv)
 	if (xml)
 		au_print_xml_footer(stdout);
 
-	return (1);
+	return (0);
 }
