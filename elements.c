@@ -549,8 +549,8 @@ el_opaque(const char *el, const char **attr, const char *body)
 		return;
 
 	/* Ensure body has proper hexadecimal prefix. */
-	if (strcmp(body, "0x") != 0)
-		errx(1, "Element 'opaque' has invalid body.");
+	if (strncmp(body, "0x", 2) != 0)
+		errx(1, "Element 'opaque' has invalid prefix.");
 
 	/* Allocate space for buffer. */
 	buf = malloc(strlen(body) + 1);
