@@ -121,15 +121,15 @@ handleElement(const char *el, const char **attr, const char *body)
 static void
 el_arbitrary(const char *el, const char **attr, const char *body)
 {
-	static uint8_t count, print, type;
+	static uint8_t count, print, size;
 	const char *body_p, *fmt;
 	token_t *tok;
-	int i, size;
+	int i, type;
 	char *buf;
 	struct attr_pair pairs[] = {
 		{"count",	&count},
 		{"print",	&print},
-		{"type",	&type},
+		{"type",	&size},
 		{NULL,		NULL}
 	};
 
@@ -137,49 +137,49 @@ el_arbitrary(const char *el, const char **attr, const char *body)
 		/* Parse element's attributes. */
 		handleAttributes("arbitrary", attr, pairs);
 
-		/* Determine the format associated with that print method. */
-		switch(print) {
-		case AUP_BINARY:
-			fmt = " %c";
-			break;
-
-		case AUP_DECIMAL:
-			fmt = " %d";
-			break;
-
-		case AUP_HEX:
-			fmt = " %x";
-			break;
-
-		case AUP_OCTAL:
-			fmt = " %o";
-			break;
-
-		case AUP_STRING:
-			fmt = "%c";
-			break;
-		}
-
 		return;
+	}
 
-		/* Determine the size associated with that type. */
-		switch (type) {
-		case AUR_BYTE:
-			size = AUR_BYTE_SIZE;
-			break;
+	/* Determine the format associated with that print method. */
+	switch(print) {
+	case AUP_BINARY:
+		fmt = " %c";
+		break;
 
-		case AUR_SHORT:
-			size = AUR_SHORT_SIZE;
-			break;
+	case AUP_DECIMAL:
+		fmt = " %d";
+		break;
 
-		case AUR_INT32:
-			size = AUR_INT32_SIZE;
-			break;
+	case AUP_HEX:
+		fmt = " %x";
+		break;
 
-		case AUR_INT64:
-			size = AUR_INT64_SIZE;
-			break;
-		}
+	case AUP_OCTAL:
+		fmt = " %o";
+		break;
+
+	case AUP_STRING:
+		fmt = "%c";
+		break;
+	}
+
+	/* Determine the type associated with that size. */
+	switch (size) {
+	case AUR_BYTE_SIZE:
+		type = AUR_BYTE;
+		break;
+
+	case AUR_SHORT_SIZE:
+		type = AUR_SHORT;
+		break;
+
+	case AUR_INT32_SIZE:
+		type = AUR_INT32;
+		break;
+
+	case AUR_INT64_SIZE:
+		type = AUR_INT64;
+		break;
 	}
 
 	/* Allocate space for buffer. */
@@ -699,6 +699,7 @@ el_record(const char *el, const char **attr, const char *body)
 	}
 
 	/* Parse element's attributes. */
+	/* XXX-MAK: Timezone bug exists, need to fix. */
 	handleAttributes("record", attr, pairs);
 	tm.tv_sec = mktime(&when);
 	tm.tv_usec = msec * 1000;
