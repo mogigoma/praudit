@@ -10,13 +10,16 @@
 #include "tokenify.h"
 
 static char	*txt_buf;
-static char	*txt_buf_clean;
 static int	 txt_buf_left;
 static int	 txt_buf_size;
 
 static void
 startElement(void *data, const char *el, const char **attr)
 {
+
+	/* Reset text buffer. */
+	bzero(txt_buf, txt_buf_size);
+	txt_buf_left = txt_buf_size - 1;
 
 	/* Call element handler. */
 	handleElement(el, attr, NULL);
@@ -46,25 +49,9 @@ insideElement(void *data, const XML_Char *xml, int len)
 static void
 endElement(void *data, const char *el)
 {
-	int i;
-
-	/* Remove trailing whitespace. */
-	i = txt_buf_size - txt_buf_left;
-	while (isspace(txt_buf[i]) && i >= 0)
-		i--;
-	txt_buf[i] = '\0';
-
-	/* Remove leading whitespace. */
-	txt_buf_clean = txt_buf;
-	while (isspace(*txt_buf_clean))
-		txt_buf_clean++;
 
 	/* Call element handler. */
-	handleElement(el, NULL, txt_buf_clean);
-
-	/* Reset text buffer. */
-	bzero(txt_buf, txt_buf_size);
-	txt_buf_left = txt_buf_size - 1;
+	handleElement(el, NULL, txt_buf);
 }
 
 int
